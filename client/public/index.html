@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>React App</title>
+    <style>
+		.title_doc{
+			font-size: 12px;
+		}
+		.document{
+			display: flex;
+			align-items: baseline;
+		}
+
+		.document i , .document p{
+			margin-right: 20px;
+			cursor: pointer;
+		}
+
+		.document p{
+			width: 150px;
+		}
+
+		.document p:hover{
+			font-weight: 600;
+		}
+      .home-page {
+	 display: flex;
+	 flex-direction: column;
+	 height: 100vh;
+}
+ .home-page .body {
+	 flex: 1;
+	 display: flex;
+	 align-items: center;
+	 justify-content: space-around;
+}
+ .home-page .body .left-side {
+	 max-width: 500px;
+}
+ .home-page .body .left-side .content h2 {
+	 font-size: 44px;
+	 font-weight: 400;
+	 margin: 0;
+}
+ .home-page .body .left-side .content p {
+	 font-size: 18px;
+	 font-weight: 300;
+}
+ .home-page .body .left-side .content .action-btn {
+	 margin-top: 60px;
+	 display: flex;
+	 align-items: center;
+	 justify-content: space-between;
+}
+ .home-page .body .left-side .content .action-btn .btn {
+	 cursor: pointer;
+	 display: flex;
+	 align-items: center;
+	 justify-content: center;
+	 font-size: 16px;
+	 padding: 15px;
+	 border: none;
+	 outline: none;
+	 background: none;
+	 border-radius: 5px;
+	 color: #00796b;
+	 text-decoration: none;
+}
+ .home-page .body .left-side .content .action-btn .btn .icon-block {
+	 padding-right: 10px;
+}
+ .home-page .body .left-side .content .action-btn .btn:hover {
+	 background: #f6faf9;
+}
+ .home-page .body .left-side .content .action-btn .input-block {
+	 margin-left: 20px;
+	 display: flex;
+	 flex: 1;
+}
+ .home-page .body .left-side .content .action-btn .input-block .input-section {
+	 position: relative;
+	 margin-right: 10px;
+}
+ .home-page .body .left-side .content .action-btn .input-block .input-section .icon-block {
+	 position: absolute;
+	 top: 50%;
+	 transform: translate(10px, -50%);
+	 color: #5f6368;
+}
+ .home-page .body .left-side .content .action-btn .input-block .input-section input {
+	 font-size: 16px;
+	 height: 48px;
+	 border: 1px solid #ccc;
+	 border-radius: 5px;
+	 padding-left: 35px;
+	 width: 100%;
+	 box-sizing: border-box;
+	 outline: none;
+}
+ .home-page .body .left-side .help-text {
+	 margin-top: 30px;
+	 padding-top: 25px;
+	 border-top: 1px solid #ddd;
+}
+ .home-page .body .left-side .help-text a {
+	 text-decoration: none;
+	 color: #00796b;
+}
+ .home-page .body .right-side .content {
+	 border: 1px solid #eee;
+	 padding: 30px;
+	 width: 100%;
+	 max-width: 650px;
+	 border-radius: 5px;
+	 box-sizing: border-box;
+	 box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.302), 0 2px 6px 2px rgba(60, 64, 67, 0.149);
+}
+ .home-page .body .right-side .content img {
+	 width: 100%;
+	 border-radius: 5px;
+}
+.message-alert-popup {
+	 position: absolute;
+	 bottom: 100px;
+	 right: 10px;
+	 background: #fff;
+	 border-radius: 5px;
+	 padding: 15px;
+	 min-width: 250px;
+	 max-width: 250px;
+}
+ .message-alert-popup .alert-header {
+	 display: flex;
+	 align-items: center;
+	 margin-bottom: 5px;
+	 color: #04796a;
+}
+ .message-alert-popup .alert-header .icon {
+	 margin-right: 10px;
+}
+ .message-alert-popup .alert-header h3 {
+	 font-size: 16px;
+	 font-weight: 500;
+	 margin: 0;
+}
+ .message-alert-popup .alert-msg {
+	 font-size: 14px;
+	 margin: 0;
+	 white-space: nowrap;
+	 overflow: hidden;
+	 text-overflow: ellipsis;
+}
+.footer-item {
+	 position: absolute;
+	 bottom: 0;
+	 left: 0;
+	 width: 100%;
+	 display: flex;
+	 align-items: center;
+	 justify-content: center;
+	 height: 90px;
+	 background: #fff;
+	 z-index: 1;
+}
+ .footer-item .left-item {
+	 display: flex;
+	 align-items: center;
+	 height: 100%;
+	 width: 350px;
+}
+ .footer-item .left-item .icon-block {
+	 display: flex;
+	 align-items: center;
+	 justify-content: center;
+	 height: 100%;
+	 padding: 0 20px;
+}
+ .footer-item .left-item .icon-block .icon {
+	 margin-left: 10px;
+	 font-size: 20px;
+}
+ .footer-item .left-item .icon-block:hover {
+	 cursor: pointer;
+	 background: #eee;
+}
+ .footer-item .center-item {
+	 width: 100%;
+	 display: flex;
+	 align-items: center;
+	 justify-content: center;
+	 flex: 1;
+}
+ .footer-item .center-item .icon-block {
+	 background: #fff;
+	 border: 1px solid #dfdfdf;
+	 width: 50px;
+	 height: 50px;
+	 border-radius: 50%;
+	 display: flex;
+	 align-items: center;
+	 justify-content: center;
+	 margin: 0 10px;
+}
+ .footer-item .center-item .icon-block .icon {
+	 color: #555;
+	 font-size: 20px;
+}
+ .footer-item .center-item .icon-block .icon.red {
+	 color: #d93025;
+}
+ .footer-item .center-item .icon-block:hover {
+	 cursor: pointer;
+	 box-shadow: 0 0 10px #ddd;
+}
+ .footer-item .center-item .icon-block.red-bg {
+	 background: #d93025;
+}
+ .footer-item .center-item .icon-block.red-bg .icon {
+	 color: #fff;
+}
+ .footer-item .right-item {
+	 display: flex;
+	 align-items: center;
+	 justify-content: flex-end;
+	 height: 100%;
+	 width: 350px;
+}
+ .footer-item .right-item .icon-block {
+	 display: flex;
+	 align-items: center;
+	 justify-content: center;
+	 flex-direction: column;
+	 height: 100%;
+	 width: 146px;
+	 color: #555;
+}
+ .footer-item .right-item .icon-block .icon {
+	 font-size: 20px;
+	 margin-bottom: 10px;
+}
+ .footer-item .right-item .icon-block .title {
+	 margin: 0;
+	 font-size: 14px;
+	 font-weight: 500;
+}
+ .footer-item .right-item .icon-block:hover {
+	 cursor: pointer;
+	 background: #eee;
+}
+.frame-header {
+	 display: flex;
+	 justify-content: space-around;
+	 align-items: center;
+	 width: 350px;
+	 position: absolute;
+	 top: 0;
+	 right: 0;
+	 background: #fff;
+	 border-radius: 0 0 0 10px;
+	 overflow: hidden;
+}
+ .frame-header .header-items {
+	 display: flex;
+	 align-items: center;
+	 justify-content: center;
+	 height: 50px;
+	 flex: 1;
+	 border-right: 1px solid #f5f5f5;
+	 position: relative;
+}
+ .frame-header .header-items .alert-circle-icon {
+	 position: absolute;
+	 background: #04796a;
+	 width: 10px;
+	 height: 10px;
+	 border-radius: 50%;
+	 border: 2px solid #fff;
+	 top: 10px;
+	 right: 20px;
+}
+ .frame-header .header-items.date-block {
+	 font-size: 22px;
+	 color: #5f6368;
+	 min-width: 120px;
+	 font-weight: 400;
+}
+ .frame-header .header-items.icon-block .icon {
+	 color: #505357;
+	 font-size: 22px;
+}
+ .frame-header .header-items.icon-block .icon.profile {
+	 font-size: 32px;
+	 color: #04796a;
+}
+ .frame-header .header-items.icon-block:hover {
+	 cursor: pointer;
+	 background: #eee;
+}
+.header {
+	 width: 100%;
+	 display: flex;
+	 justify-content: space-between;
+	 padding: 20px;
+	 box-sizing: border-box;
+}
+ .header .logo {
+	 display: flex;
+	 align-items: center;
+	 width: 124px;
+}
+ .header .logo img {
+	 width: 100%;
+}
+ .header .logo .help-text {
+	 font-size: 22px;
+	 padding-left: 4px;
+	 color: #5f6368;
+}
+ .header .action-btn {
+	 display: flex;
+	 align-items: center;
+}
+ .header .action-btn .icon-block {
+	 font-size: 20px;
+	 padding: 10px;
+	 color: #5f6368;
+}
+.meeting-info-block {
+	 position: absolute;
+	 top: 50px;
+	 left: 50px;
+	 background: #fff;
+	 border-radius: 10px;
+	 padding: 25px;
+	 width: 310px;
+}
+ .meeting-info-block .meeting-header {
+	 display: flex;
+	 align-items: center;
+	 justify-content: space-between;
+	 color: #222;
+}
+ .meeting-info-block .meeting-header h3 {
+	 margin: 0;
+	 font-size: 18px;
+	 font-weight: 400;
+}
+ .meeting-info-block .meeting-header .icon {
+	 cursor: pointer;
+	 font-size: 20px;
+}
+ .meeting-info-block .add-people-btn {
+	 display: flex;
+	 align-items: center;
+	 justify-content: center;
+	 background: #04796a;
+	 color: #fff;
+	 font-size: 16px;
+	 padding: 10px;
+	 border-radius: 5px;
+	 outline: none;
+	 border: none;
+	 margin-top: 20px;
+}
+ .meeting-info-block .add-people-btn .icon {
+	 font-size: 12px;
+	 margin-right: 10px;
+}
+ .meeting-info-block .info-text {
+	 color: #222;
+	 font-size: 14px;
+}
+ .meeting-info-block .meet-link {
+	 display: flex;
+	 align-items: center;
+	 justify-content: space-between;
+	 background: #f1f3f5;
+	 padding: 15px;
+	 border-radius: 5px;
+}
+ .meeting-info-block .meet-link span {
+	 font-size: 14px;
+	 font-weight: 600;
+	 border: none;
+	 outline: none;
+	 background: none;
+	 flex: 1;
+	 color: #555;
+}
+ .meeting-info-block .meet-link .icon {
+	 cursor: pointer;
+	 color: #555;
+}
+ .meeting-info-block .permission-text {
+	 display: flex;
+	 align-items: center;
+	 justify-content: center;
+}
+ .meeting-info-block .permission-text .icon {
+	 color: #4385f4;
+	 font-size: 20px;
+	 margin-right: 10px;
+}
+ .meeting-info-block .small-text {
+	 font-size: 13px;
+	 color: #222;
+}
+.messenger-container {
+	 position: absolute;
+	 top: 0;
+	 right: 0;
+	 background: #fff;
+	 height: calc(100vh - 90px);
+	 width: 350px;
+	 box-sizing: border-box;
+	 display: flex;
+	 justify-content: space-between;
+	 flex-direction: column;
+}
+ .messenger-container .messenger-header {
+	 padding: 20px;
+	 display: flex;
+	 align-items: center;
+	 justify-content: space-between;
+	 margin: 10px 0;
+}
+ .messenger-container .messenger-header h3 {
+	 margin: 0;
+	 font-weight: 400;
+}
+ .messenger-container .messenger-header .icon {
+	 cursor: pointer;
+	 font-size: 20px;
+}
+ .messenger-container .messenger-header-tabs {
+	 display: flex;
+	 align-items: center;
+	 border-bottom: 1px solid #eee;
+}
+ .messenger-container .messenger-header-tabs .tab {
+	 display: flex;
+	 align-items: center;
+	 justify-content: center;
+	 width: 100%;
+	 color: #555;
+}
+ .messenger-container .messenger-header-tabs .tab p {
+	 margin-left: 10px;
+}
+ .messenger-container .messenger-header-tabs .tab.active {
+	 border-bottom: 2px solid #04796a;
+	 color: #04796a;
+}
+ .messenger-container .messenger-header-tabs .tab:hover {
+	 cursor: pointer;
+	 background: rgba(0, 121, 107, 0.039);
+}
+ .messenger-container .chat-section {
+	 padding: 20px;
+	 flex: 1;
+	 overflow-y: scroll;
+}
+ .messenger-container .chat-section .chat-block {
+	 margin-bottom: 30px;
+}
+ .messenger-container .chat-section .chat-block .sender {
+	 font-weight: 500;
+	 font-size: 14px;
+}
+ .messenger-container .chat-section .chat-block .sender small {
+	 margin-left: 5px;
+	 font-weight: 300;
+}
+ .messenger-container .chat-section .chat-block .msg {
+	 margin: 0;
+	 padding-top: 5px;
+	 color: #555;
+	 font-size: 14px;
+}
+ .messenger-container .send-msg-section {
+	 padding: 20px;
+	 border-top: 1px solid #eee;
+	 border-bottom: 1px solid #eee;
+	 display: flex;
+	 align-items: center;
+	 justify-content: space-between;
+	 color: #555;
+}
+ .messenger-container .send-msg-section input {
+	 padding: 5px;
+	 border: none;
+	 outline: none;
+	 border-bottom: 1px solid #eee;
+	 width: 80%;
+}
+ .messenger-container .send-msg-section .icon {
+	 cursor: pointer;
+}
+ .messenger-container .send-msg-section .icon:hover {
+	 color: #04796a;
+}
+ 
+
+.callpage-container .video-container {
+	 height: 100vh;
+	 width: 100%;
+	 object-fit: cover;
+	 position: absolute;
+	 z-index: -1;
+}
+
+    </style>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+  </body>
+</html>
