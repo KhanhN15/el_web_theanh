@@ -24,14 +24,14 @@ app.use("/profile", require("./routes/profileRoute"));
 app.use("/enroll-course", require("./routes/enrollRoute"));
 app.use("/api", require("./routes/callRoute"));
 
-const io = (module.exports.io = require("socket.io")(server, {
-  cors: {
-    origin: "*",
-  },
-}));
+// const io = (module.exports.io = require("socket.io")(server, {
+//   cors: {
+//     origin: "*",
+//   },
+// }));
 
-const socketManager = require("./config/socketManager");
-io.on("connection", socketManager);
+// const socketManager = require("./config/socketManager");
+// io.on("connection", socketManager);
 
 //TODO: Deploy:
 

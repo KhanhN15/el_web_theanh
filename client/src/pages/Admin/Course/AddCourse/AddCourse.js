@@ -14,7 +14,7 @@ const AddCourse = ({ setCourse, course }) => {
     <>
       <div className={Styles.child__div}>
         <Paper className="p-3 px-5 rounded shadow my-3">
-          <IconButton style={{ backgroundColor: "green", textAlign: "center" }}>
+          <IconButton style={{ backgroundColor: "gray", textAlign: "center" }}>
             <NoteAddIcon className={Styles.icon__style} />
           </IconButton>
 
@@ -23,7 +23,7 @@ const AddCourse = ({ setCourse, course }) => {
           </div>
         </Paper>
         <Paper className="p-3 px-5 rounded shadow my-3">
-          <IconButton style={{ backgroundColor: "green", textAlign: "center" }}>
+          <IconButton style={{ backgroundColor: "gray", textAlign: "center" }}>
             <ImportContactsIcon className={Styles.icon__style} />
           </IconButton>
 
@@ -34,7 +34,7 @@ const AddCourse = ({ setCourse, course }) => {
               color="primary"
               className="text-center"
             >
-              View Course
+              Xem các khóa
             </Button>
           </div>
         </Paper>

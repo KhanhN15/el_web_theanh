@@ -93,7 +93,7 @@ const AddCourseModal = () => {
   return (
     <div>
       <Button color="primary" variant="contained" onClick={handleShow}>
-        Add Course
+        Thêm Khóa Học
       </Button>
 
       <Toast_Comp
@@ -113,7 +113,7 @@ const AddCourseModal = () => {
         <Modal.Header closeButton>
           <Modal.Title>
             <Typography color="textSecondary" variant="h4">
-              Add Course
+              Thêm Khóa Học
             </Typography>
           </Modal.Title>
         </Modal.Header>
@@ -122,17 +122,17 @@ const AddCourseModal = () => {
 
           <Form onSubmit={courseFormHandler} encType="multipart/form-data">
             <Form.Group>
-              <Form.Label>Course Name</Form.Label>
+              <Form.Label>Tên Lớp Học</Form.Label>
               <Form.Control
                 required
                 onChange={(e) => setCourseName(e.target.value)}
                 value={courseName}
                 type="text"
-                placeholder="Enter course name"
+                placeholder="Nhập tên lớp học"
               />
             </Form.Group>
             <Form.Group>
-              <Form.Label>Course Description</Form.Label>
+              <Form.Label>Mô tả Lớp Hoc</Form.Label>
 
               <Form.Control
                 required
@@ -140,11 +140,11 @@ const AddCourseModal = () => {
                 value={courseDescription}
                 as="textarea"
                 rows={3}
-                placeholder="Enter course Description"
+                placeholder="Nhập mô tả lớp học"
               />
             </Form.Group>
             <Form.Group className="input__file">
-              <label>Course Thumbnail</label>
+              <label>Ảnh mô tả</label>
               <br />
               <Form.File
                 required
@@ -158,9 +158,9 @@ const AddCourseModal = () => {
             </Form.Group>
             <Form.Group>
               <Form.Label>
-                Room Code*{" "}
+                Mã phòng*{" "}
                 <p style={{ color: "red", display: "inline" }}>
-                  Required without special characters
+                  Không được chứa các kí tự đặc biệt
                 </p>
               </Form.Label>
 
@@ -169,11 +169,11 @@ const AddCourseModal = () => {
                 onChange={(e) => handleChangeCode(e)}
                 value={codeRoom}
                 type="text"
-                placeholder="Enter course name"
+                placeholder="Nhập mã code"
               />
             </Form.Group>
             <Form.Group>
-              <Form.Label>Detail </Form.Label>
+              <Form.Label>Chi tiết </Form.Label>
 
               <Form.Control
                 required
@@ -181,17 +181,17 @@ const AddCourseModal = () => {
                 value={detailData}
                 as="textarea"
                 rows={3}
-                placeholder="Enter detail data"
+                placeholder="Nhập chi tiết"
               />
             </Form.Group>
             <Button type="submit" color="primary" variant="contained">
-              Submit
+              Xác nhận
             </Button>
           </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button color="secondary" variant="contained" onClick={handleClose}>
-            Close
+            Đóng
           </Button>
         </Modal.Footer>
       </Modal>

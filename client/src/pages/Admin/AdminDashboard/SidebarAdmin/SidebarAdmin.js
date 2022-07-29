@@ -13,14 +13,17 @@ const SidebarAdmin = () => {
     <div className={Styles.sidebarAdmin}>
       <Sidebar title="Dashboard" link="/admin-dashboard" Icon={DashboardIcon} />
       <Sidebar
-        title="Course"
+        title="Khóa Học"
         link="/admin/course-info"
         Icon={LocalLibraryIcon}
       />
-      <Sidebar title="Student" link="/admin/student-info" Icon={GroupIcon} />
-      <Sidebar title="Teacher" link="/admin/teacher-info" Icon={PersonIcon} />
-      {/* <Sidebar title="Room" link="/home-call" Icon={PersonIcon} /> */}
-      <Sidebar title="Logout" link="/admin/teacher-info" Icon={ExitToAppIcon} />
+      <Sidebar title="Học Sinh" link="/admin/student-info" Icon={GroupIcon} />
+      <Sidebar title="Giáo Viên" link="/admin/teacher-info" Icon={PersonIcon} />
+      <Sidebar
+        title="Đăng Xuất"
+        link="/admin/teacher-info"
+        Icon={ExitToAppIcon}
+      />
     </div>
   );
 };

@@ -33,6 +33,15 @@ const CardOfAllCourse = () => {
     history.push(`/detail-courses/${id}`);
   };
 
+  const redirectNewPage = (id) => {
+    const data = JSON.parse(localStorage.getItem("user"));
+
+    window.open(
+      `https://webroomcall.herokuapp.com/lobby.html?name=${data.userName}&room=${id}`,
+      "_blank"
+    );
+  };
+
   return (
     <Container>
       <Row className="g-4">
@@ -48,6 +57,16 @@ const CardOfAllCourse = () => {
                       title="Contemplative Reptile"
                     />
                     <CardContent>
+                      <span
+                        style={{
+                          cursor: "pointer",
+                          textDecoration: "underline",
+                          color: "red",
+                        }}
+                        onClick={() => redirectNewPage(val.courseRoom)}
+                      >
+                        Link Phòng học
+                      </span>
                       <Typography gutterBottom variant="h5" component="h2">
                         {val.courseName}
                       </Typography>

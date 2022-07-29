@@ -50,7 +50,7 @@ const Dashboard = () => {
   return (
     <div className="dashboard">
       <div className="left__sidebar__dashboard">
-        <Sidebar Icon={DashboardIcon} title="Dashboard" link="/" />
+        {/* <Sidebar Icon={DashboardIcon} title="Dashboard" link="/" />
         <Sidebar Icon={PersonIcon} title="Profile" link="/profile" />
         <Sidebar Icon={TouchAppIcon} title="Grades" link="/grades" />
         <Sidebar Icon={MessageIcon} title="Messages" link="/messages" />
@@ -58,7 +58,7 @@ const Dashboard = () => {
           Icon={SettingsApplicationsIcon}
           title="Preferences"
           link="/preferences"
-        />
+        /> */}
         <Sidebar Icon={ExitToAppIcon} title="Logout" />
       </div>
 
@@ -70,7 +70,7 @@ const Dashboard = () => {
           </div>
         </Container>
 
-        <div className="d-flex flex-wrap justify-content-md-between justify-content-md-end">
+        {/* <div className="d-flex flex-wrap justify-content-md-between justify-content-md-end">
           <Body4Card
             link="/messages"
             shortTitle="Communicate"
@@ -94,7 +94,7 @@ const Dashboard = () => {
             title="Grades"
             Icon={TouchAppIcon}
           />
-        </div>
+        </div> */}
 
         <Container fluid className="my-5">
           <Row>

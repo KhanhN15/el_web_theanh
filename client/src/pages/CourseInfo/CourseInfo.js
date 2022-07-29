@@ -15,13 +15,16 @@ import AccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import NoteAddIcon from "@material-ui/icons/NoteAdd";
 
-import { Divider } from "@material-ui/core";
+import ControlPointIcon from "@material-ui/icons/ControlPoint";
+import { Divider, Button } from "@material-ui/core";
 import InsertCommentIcon from "@material-ui/icons/InsertComment";
 import MovieFilterIcon from "@material-ui/icons/MovieFilter";
 import ExtensionIcon from "@material-ui/icons/Extension";
 import NoticeToggleRow from "./NoticeToggle/NoticeToggleRow/NoticeToggleRow";
 import { BASE_URL } from "../../utils/apiEndpoints";
 import { useHistory } from "react-router-dom";
+
+import { dataLocalStorage, formatDate } from "../../utils/helpers";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,6 +43,9 @@ const CourseInfo = () => {
   const classes = useStyles();
   const [data, setData] = useState([]);
   const history = useHistory();
+  const { _id, userName } = dataLocalStorage();
+  const [notification, setNotification] = useState([]);
+  const [isShowButtonExam, setIsShowButtonExam] = useState(false);
 
   useEffect(() => {
     Axios.get(`http://localhost:5000/get-course/${courseId}`, {
@@ -47,9 +53,16 @@ const CourseInfo = () => {
         Authorization: "Bearer " + localStorage.getItem("auth_token"),
       },
     })
-      .then((result) => {
+      .then(async (result) => {
         if (result.status === 200) {
           setDetailData(result.data.course);
+          ///
+          const res = await Axios.get(
+            `${BASE_URL}/show-all-notification-by-status/${result.data.course.app}`
+          );
+          if (res.status === 200) {
+            setNotification(res.data.data);
+          }
         }
       })
       .catch((err) => {
@@ -60,12 +73,14 @@ const CourseInfo = () => {
 
   useEffect(async () => {
     try {
-      const res = await Axios.get(`${BASE_URL}/show-all-pdf`);
-      if (res.status === 200) {
-        setData(res.data.courses);
+      const data = await Axios.get(
+        `/get-leader-private/${courseId}/${userName}`
+      );
+      if (data.data.data[0].score) {
+        setIsShowButtonExam(true);
       }
     } catch (error) {
-      alert("error");
+      console.log(error);
     }
   }, []);
 
@@ -87,11 +102,75 @@ const CourseInfo = () => {
     );
   };
 
+  const startExam = () => {
+    history.push(`/quiz/${courseId}`);
+  };
+  console.log(isShowButtonExam);
+
   return (
     <div>
       <CommonHeader title={detailData?.courseName} />
       <Container className="my-5">
+        <Paper className="py-1 px-3 mb-5">
+          <p
+            style={{
+              fontWeight: 800,
+              color: "red",
+              display: "inline-block",
+              marginRight: "20px",
+            }}
+          >
+            Thông báo :{" "}
+            {notification[0]?.idTeacher && notification[0]?.idTeacher?.userName}
+          </p>
+          <span style={{ fontWeight: 900 }}>({notification[0]?.title})</span>
+          <ul>
+            {notification.length > 0 &&
+              notification.map((e) => (
+                <li
+                  key={e._id}
+                  style={{
+                    borderBottom: "1px solid gray",
+                    margin: "10px 0",
+                    listStyle: "none",
+                  }}
+                  className="notification"
+                >
+                  <img
+                    style={{ float: "right", padding: " 0 5px" }}
+                    src="https://daotao.vku.udn.vn/public/images/new.gif"
+                    alt=""
+                  />
+                  <span
+                    style={{
+                      float: "right",
+                      fontSize: "12px",
+                      fontStyle: "italic",
+                    }}
+                  >
+                    {formatDate(e.createdAt)}
+                  </span>
+                  <p>{e.description}</p>
+                </li>
+              ))}
+          </ul>
+        </Paper>
         <Paper className="px-5 py-3">
+          {!isShowButtonExam && (
+            <Button
+              variant="outlined"
+              startIcon={
+                <img
+                  src="https://daotao.vku.udn.vn/public/images/new.gif"
+                  alt=""
+                />
+              }
+              onClick={startExam}
+            >
+              Bắt đầu thi
+            </Button>
+          )}
+
           <div className="">
             <div className="d-flex justify-content-between align-items-center my-4">
               <Typography variant="h6">

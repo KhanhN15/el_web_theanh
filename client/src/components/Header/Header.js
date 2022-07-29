@@ -42,7 +42,22 @@ const Header = () => {
                 {" "}
                 <li>
                   <NavLink onClick={toggleClose} to="/teacher-dashboard">
-                    Dashboard
+                    Trang Chủ
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink onClick={toggleClose} to="/course-info">
+                    Khóa Học
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink onClick={toggleClose} to="/course-info-notification">
+                    Thông Báo
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink onClick={toggleClose} to="/all-courses">
+                    Tất cả Khóa Học
                   </NavLink>
                 </li>
               </>
@@ -52,22 +67,22 @@ const Header = () => {
                 {" "}
                 <li>
                   <NavLink onClick={toggleClose} to="/admin-dashboard">
-                    Dashboard
+                    Trang Chủ
                   </NavLink>
                 </li>
                 <li className="admin__toggle__menu">
                   <NavLink onClick={toggleClose} to="/admin/course-info">
-                    Course-Info
+                    Khóa Học
                   </NavLink>
                 </li>
                 <li className="admin__toggle__menu">
                   <NavLink onClick={toggleClose} to="/admin/student-info">
-                    Student-Info
+                    Học Sinh
                   </NavLink>
                 </li>
                 <li className="admin__toggle__menu">
                   <NavLink onClick={toggleClose} to="/admin/teacher-info">
-                    Teacher-Info
+                    Giáo Viên
                   </NavLink>
                 </li>
               </>
@@ -76,10 +91,10 @@ const Header = () => {
               <>
                 <li>
                   <NavLink onClick={toggleClose} to="/">
-                    Dashboard
+                    Trang Chủ
                   </NavLink>
                 </li>
-                <li>
+                {/* <li>
                   <NavLink onClick={toggleClose} to="/ucam">
                     UCAM
                   </NavLink>
@@ -88,21 +103,15 @@ const Header = () => {
                   <NavLink onClick={toggleClose} to="/library">
                     LIBRARY
                   </NavLink>
-                </li>{" "}
+                </li>{" "} */}
               </>
             )}
 
             <li>
               <Link onClick={toggleClose} to="/profile">
-                Profile
+                Thông Tin Cá Nhân
               </Link>
             </li>
-            <li>
-              <NavLink onClick={toggleClose} to="/all-courses">
-                All Courses
-              </NavLink>
-            </li>
-
             {user.role === "Teacher" ? (
               <li className="">
                 <Button
@@ -113,7 +122,7 @@ const Header = () => {
                     history.push("/login");
                   }}
                 >
-                  Logout
+                  Đăng Xuất
                 </Button>
               </li>
             ) : (
@@ -126,7 +135,7 @@ const Header = () => {
                     history.push("/login");
                   }}
                 >
-                  Logout
+                  Đăng Xuất
                 </Button>
               </li>
             )}
@@ -135,18 +144,6 @@ const Header = () => {
       </div>
       {user ? (
         <div className="right__header">
-          <IconButton>
-            <VisibilityOffIcon />
-          </IconButton>
-          <IconButton>
-            <NotificationsActiveIcon />
-          </IconButton>
-          <IconButton>
-            <ChatIcon />
-          </IconButton>
-          <IconButton>
-            <SettingsIcon />
-          </IconButton>
           <Link to="/profile">
             <Avatar>R</Avatar>
           </Link>
@@ -154,10 +151,10 @@ const Header = () => {
       ) : (
         <div className="d-flex list-unstyled">
           <li className="mr-3">
-            <NavLink to="/Login">Login</NavLink>
+            <NavLink to="/Login">Đăng Nhập </NavLink>
           </li>
           <li>
-            <NavLink to="/Register">Register</NavLink>
+            <NavLink to="/Register">Đăng ký</NavLink>
           </li>
         </div>
       )}

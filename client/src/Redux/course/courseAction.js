@@ -11,7 +11,7 @@ export const getCourses = (courseInfo) => {
 
 export const fetchCourseInfo = () => {
   return (dispatch) => {
-    Axios.get(`/get-courses`, {
+    Axios.get(`${BASE_URL}/get-courses`, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("auth_token"),
       },

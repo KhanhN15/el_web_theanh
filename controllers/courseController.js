@@ -1,7 +1,11 @@
 const CourseModel = require("../model/CourseModel");
 const PdfModel = require("../model/PdfModel");
+const NotificationModel = require("../model/NotificationModel");
 const cloudinary = require("../middlewares/cloudinary");
 const mongoose = require("mongoose");
+const UserModel = require("../model/UserModel");
+const QuizModel = require("../model/QuizModel");
+const LeadBoardModel = require("../model/LeadBoardModel");
 
 module.exports.postCourse__controller = async (req, res, next) => {
   try {
@@ -218,7 +222,10 @@ module.exports.addPdf = async (req, res, next) => {
 
 module.exports.showAllPdf = async (req, res, next) => {
   try {
-    const courses = await PdfModel.find();
+    const courses = await PdfModel.find().populate(
+      "idTeacher",
+      "role _id userName email"
+    );
     return res.status(200).json({
       courses,
     });
@@ -298,6 +305,337 @@ module.exports.putPdfById = async (req, res, next) => {
     const productExist = await PdfModel.findOne({ pdfName });
   } catch (error) {
     console.log(error);
+    return res.status(400).json({
+      error: "Something went wrong",
+    });
+  }
+};
+
+module.exports.createNotification = async (req, res, next) => {
+  try {
+    const { idTeacher, title, description } = req.body;
+    const notify = new NotificationModel({
+      title,
+      description,
+      idTeacher,
+    });
+    if (notify) {
+      const create = await notify.save();
+      return res.status(200).json({
+        mess: "Success",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({
+      error: "Something went wrong",
+    });
+  }
+};
+
+module.exports.showAllNotificationById = async (req, res, next) => {
+  try {
+    const data = await NotificationModel.find().populate(
+      "idTeacher",
+      "role userName email"
+    );
+    if (data) {
+      return res.status(200).json({
+        data,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({
+      error: "Something went wrong",
+    });
+  }
+};
+
+module.exports.showNotificationById = async (req, res, next) => {
+  try {
+    const data = await NotificationModel.findById(req.params.id).populate(
+      "idTeacher",
+      "role userName email"
+    );
+    if (data) {
+      return res.status(200).json({
+        data,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({
+      error: "Something went wrong",
+    });
+  }
+};
+
+module.exports.putNotificationById = async (req, res, next) => {
+  try {
+    const { idNotification, title, description, idTeacher } = req.body;
+    const notify = await NotificationModel.findById(idNotification);
+
+    if (notify) {
+      notify.title = title || notify.title;
+      notify.description = description || notify.description;
+      notify.idTeacher = idTeacher || notify.idTeacher;
+      const updatedProduct = await notify.save();
+      return res.status(200).json({
+        mess: "Success",
+      });
+    } else {
+      return res.status(400).json({
+        error: "Not Found",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({
+      error: "Something went wrong",
+    });
+  }
+};
+
+module.exports.deleteNotification = async (req, res, next) => {
+  try {
+    const pdf = await NotificationModel.findById(req.params.id);
+    if (pdf) {
+      await pdf.remove();
+      return res.status(200).json({
+        mess: "Success",
+      });
+    } else {
+      return res.status(400).json({
+        mess: "Fails",
+      });
+    }
+  } catch (error) {
+    return res.status(400).json({
+      error: "Something went wrong",
+    });
+  }
+};
+
+module.exports.updateStatusNotification = async (req, res, next) => {
+  try {
+    const { idNotification, isShow } = req.body;
+    const notify = await NotificationModel.findById(idNotification);
+
+    if (notify) {
+      notify.isShow = isShow;
+      const updatedProduct = await notify.save();
+      return res.status(200).json({
+        mess: "Success",
+      });
+    } else {
+      return res.status(400).json({
+        error: "Not Found",
+      });
+    }
+  } catch (error) {
+    return res.status(400).json({
+      error: "Something went wrong",
+    });
+  }
+};
+
+module.exports.showAllNotificationByStatus = async (req, res, next) => {
+  try {
+    const { _id } = await UserModel.findById(req.params.id);
+
+    const data = await NotificationModel.find({
+      isShow: true,
+      idTeacher: mongoose.Types.ObjectId(_id),
+    }).populate("idTeacher", "role userName email");
+    if (data) {
+      return res.status(200).json({
+        data,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({
+      error: "Something went wrong",
+    });
+  }
+};
+
+module.exports.showNotificationStatusById = async (req, res, next) => {
+  try {
+    const { _id } = await UserModel.findById(req.params.id);
+
+    const data = await NotificationModel.find({
+      idTeacher: mongoose.Types.ObjectId(_id),
+    }).populate("idTeacher", "role userName email");
+    if (data) {
+      return res.status(200).json({
+        data,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({
+      error: "Something went wrong",
+    });
+  }
+};
+const limitrecords = 10;
+module.exports.getQuiz = async (req, res, next) => {
+  try {
+    const data = await QuizModel.find({ typeCourse: req.params.id }).limit(10);
+    return res.status(200).json({
+      data: data || [],
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({
+      error: "Something went wrong",
+    });
+  }
+};
+
+function getRandomArbitrary(min, max) {
+  return Math.ceil(Math.random() * (max - min) + min);
+}
+
+module.exports.postQuiz = async (req, res, next) => {
+  try {
+    const quizData = new QuizModel(req.body);
+    quizData.save((err) => {
+      if (err) {
+        return res.status(400).json({
+          mess: "Error",
+        });
+      } else {
+        return res.status(200).json({
+          mess: "Success",
+        });
+      }
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({
+      error: "Something went wrong",
+    });
+  }
+};
+
+module.exports.getLeader = async (req, res, next) => {
+  try {
+    const data = await LeadBoardModel.find();
+    if (data) {
+      return res.status(200).json({
+        data,
+      });
+    }
+  } catch (error) {
+    return res.status(400).json({
+      error: "Something went wrong",
+    });
+  }
+};
+
+module.exports.getLeaderPrivate = async (req, res, next) => {
+  try {
+    const data = await LeadBoardModel.find({
+      typeCourse: req.params.id,
+      name: req.params.name,
+    });
+    if (data) {
+      return res.status(200).json({
+        data,
+      });
+    }
+  } catch (error) {
+    return res.status(400).json({
+      error: "Something went wrong",
+    });
+  }
+};
+
+module.exports.postLeader = async (req, res, next) => {
+  try {
+    const leaderBoard = new LeadBoardModel(req.body);
+    leaderBoard.save((err) => {
+      if (err) {
+        return res.status(400).json({
+          mess: "Error",
+        });
+      } else {
+        return res.status(200).json({
+          mess: "Success",
+        });
+      }
+    });
+  } catch (error) {
+    return res.status(400).json({
+      error: "Something went wrong",
+    });
+  }
+};
+
+module.exports.deleteQuiz = async (req, res, next) => {
+  try {
+    const checkId = await QuizModel.findById(req.params.id);
+    if (checkId) {
+      await checkId.remove();
+      return res.status(200).json({
+        mess: "Success",
+      });
+    }
+  } catch (error) {
+    return res.status(400).json({
+      error: "Something went wrong",
+    });
+  }
+};
+
+module.exports.findQuizById = async (req, res, next) => {
+  try {
+    const checkId = await QuizModel.findById(req.params.id);
+    if (checkId) {
+      return res.status(200).json({
+        data: checkId,
+      });
+    }
+  } catch (error) {
+    return res.status(400).json({
+      error: "Something went wrong",
+    });
+  }
+};
+
+module.exports.updateQuiz = async (req, res, next) => {
+  try {
+    const {
+      idEdit,
+      category,
+      typeCourse,
+      isStart,
+      difficulty,
+      question,
+      correct_answer,
+      answers,
+    } = req.body;
+
+    const quiz = await QuizModel.findById(idEdit);
+
+    if (quiz) {
+      quiz.category = category || quiz.category;
+      quiz.typeCourse = typeCourse || quiz.typeCourse;
+      quiz.isStart = isStart || quiz.isStart;
+      quiz.difficulty = difficulty || quiz.difficulty;
+      quiz.question = question || quiz.question;
+      quiz.correct_answer = correct_answer || quiz.correct_answer;
+      quiz.answers = answers || quiz.answers;
+      const updatedProduct = await quiz.save();
+
+      return res.status(200).json({
+        mess: "success",
+      });
+    }
+  } catch (error) {
     return res.status(400).json({
       error: "Something went wrong",
     });

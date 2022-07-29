@@ -81,19 +81,19 @@ const CourseInfoTable = ({ course }) => {
           <TableHead>
             <TableRow className="bg-dark ">
               <TableCell align="center" className="text-light">
-                Id
+                Mã
               </TableCell>
               <TableCell align="center" className="text-light">
-                CourseName
+                Tên Khóa Học
               </TableCell>
               <TableCell align="center" className="text-light">
-                Course Thumbnail
+                Hình ảnh
               </TableCell>
               <TableCell align="center" className="text-light">
-                Created By
+                Người tạo
               </TableCell>
               <TableCell align="center" className="text-light">
-                Actions
+                Hành động
               </TableCell>
             </TableRow>
           </TableHead>
@@ -125,9 +125,6 @@ const CourseInfoTable = ({ course }) => {
 
                 <TableCell align="center">{row.app.role}</TableCell>
                 <TableCell className="" align="center">
-                  <IconButton>
-                    <EditIcon color="primary" />
-                  </IconButton>
                   <IconButton onClick={() => deleteCourseHandler(row._id)}>
                     <DeleteIcon style={{ color: "red" }} />
                   </IconButton>

@@ -34,6 +34,11 @@ import HomeCall from "./pages/CallPage/home";
 import PDF from "./pages/PDF";
 
 import DetailCourse from "./pages/DetailCourse";
+import TeacherCourseInfo from "./pages/Teacher/TeacherCourseInfo";
+import TeacherNotification from "./pages/Teacher/TeacherNotification";
+import QuizPage from "./pages/Quiz/QuizPage";
+import AdminQuizPage from "./pages/Quiz/AdminQuizPage";
+import QuizResult from "./pages/Quiz/QuizResult";
 
 const Routing = () => {
   const history = useHistory();
@@ -67,6 +72,12 @@ const Routing = () => {
       <AdminRoute exact path="/admin/course-info">
         <AdminCourseInfo />
       </AdminRoute>
+      <TeacherRoute exact path="/course-info">
+        <TeacherCourseInfo />
+      </TeacherRoute>
+      <TeacherRoute exact path="/course-info-notification">
+        <TeacherNotification />
+      </TeacherRoute>
       <AdminRoute exact path="/admin/student-info">
         <StudentInfo />
       </AdminRoute>
@@ -104,12 +115,14 @@ const Routing = () => {
       <Route exact path="/course/:courseId">
         <CourseInfo />
       </Route>
-      {/* call */}
-      <Route exact path="/home-call/:id">
-        <CallPage />
+      <Route exact path="/quiz/:courseId">
+        <QuizPage />
       </Route>
-      <Route exact path="/home-call">
-        <HomeCall />
+      <Route exact path="/quiz/:courseId/results">
+        <QuizResult />
+      </Route>
+      <Route exact path="/admin-quiz/:id">
+        <AdminQuizPage />
       </Route>
       <Route path="*">
         <NotFound />
