@@ -39,6 +39,7 @@ import TeacherNotification from "./pages/Teacher/TeacherNotification";
 import QuizPage from "./pages/Quiz/QuizPage";
 import AdminQuizPage from "./pages/Quiz/AdminQuizPage";
 import QuizResult from "./pages/Quiz/QuizResult";
+import QuizReview from "./pages/Quiz/QuizReview";
 
 const Routing = () => {
   const history = useHistory();
@@ -120,6 +121,9 @@ const Routing = () => {
       </Route>
       <Route exact path="/quiz/:courseId/results">
         <QuizResult />
+      </Route>
+      <Route exact path="/quiz/:courseId/review">
+        <QuizReview />
       </Route>
       <Route exact path="/admin-quiz/:id">
         <AdminQuizPage />

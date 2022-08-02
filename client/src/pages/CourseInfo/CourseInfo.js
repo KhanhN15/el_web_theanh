@@ -73,6 +73,17 @@ const CourseInfo = () => {
 
   useEffect(async () => {
     try {
+      const data = await Axios.get(`/show-pdf-file/${courseId}`);
+      if (data.status === 200) {
+        setData(data.data.course);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  useEffect(async () => {
+    try {
       const data = await Axios.get(
         `/get-leader-private/${courseId}/${userName}`
       );
@@ -105,7 +116,7 @@ const CourseInfo = () => {
   const startExam = () => {
     history.push(`/quiz/${courseId}`);
   };
-  console.log(isShowButtonExam);
+  console.log(data);
 
   return (
     <div>
@@ -209,8 +220,8 @@ const CourseInfo = () => {
               </AccordionDetails>
             </Accordion>
             {/* Bai Tap */}
-            {data?.map((row) => (
-              <Accordion style={{ backgroundColor: "#EDEFF7" }}>
+            {data?.map((row, index) => (
+              <Accordion key={index} style={{ backgroundColor: "#EDEFF7" }}>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="panel1a-content"

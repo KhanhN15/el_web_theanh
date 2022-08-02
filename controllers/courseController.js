@@ -6,6 +6,8 @@ const mongoose = require("mongoose");
 const UserModel = require("../model/UserModel");
 const QuizModel = require("../model/QuizModel");
 const LeadBoardModel = require("../model/LeadBoardModel");
+const ResultExam = require("../model/ResultExam");
+const Meeting = require("../model/Meeting");
 
 module.exports.postCourse__controller = async (req, res, next) => {
   try {
@@ -112,10 +114,15 @@ module.exports.deleteCourse__Controller = async (req, res, next) => {
   }
 };
 
+function removeDuplicates(arr) {
+  return arr.filter((item, index) => arr.indexOf(item) == index);
+}
+
 module.exports.addStudent = async (req, res, next) => {
   try {
     const { idCourse, listIdStudent } = req.body;
     const _ids = mongoose.Types.ObjectId(idCourse);
+    const _idls = mongoose.Types.ObjectId(listIdStudent);
     // const array = JSON.parse(listIdStudent);
 
     if (_ids) {
@@ -126,16 +133,19 @@ module.exports.addStudent = async (req, res, next) => {
       let newArray = [];
       if (beforeArray && beforeArray.length > 0) {
         newArray = [...beforeArray];
-        if (!newArray.includes(listIdStudent)) {
+        if (newArray.includes(_idls)) {
           newArray.push(listIdStudent);
+        } else {
         }
       } else {
         newArray.push(listIdStudent);
       }
 
+      const dataN = removeDuplicates(newArray);
+
       const course = await CourseModel.findOneAndUpdate(
         { _id: _ids },
-        { student: newArray },
+        { student: dataN },
         function (err, result) {
           if (err) {
             return res.status(400).json({
@@ -254,6 +264,19 @@ module.exports.showAllPdfByIdCourse = async (req, res, next) => {
     const courses = await PdfModel.findById(req.params.id);
     return res.status(200).json({
       courses,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      error: "Something went wrong",
+    });
+  }
+};
+
+module.exports.showPdfWithId = async (req, res, next) => {
+  try {
+    const course = await PdfModel.find({ idCourse: req.params.id });
+    return res.status(200).json({
+      course,
     });
   } catch (error) {
     return res.status(400).json({
@@ -635,6 +658,62 @@ module.exports.updateQuiz = async (req, res, next) => {
         mess: "success",
       });
     }
+  } catch (error) {
+    return res.status(400).json({
+      error: "Something went wrong",
+    });
+  }
+};
+
+module.exports.postDetailExam = async (req, res, next) => {
+  try {
+    const res = new ResultExam(req.body);
+    res.save((err) => {
+      if (err) {
+        return res.status(400).json({
+          mess: "Error",
+        });
+      } else {
+        return res.status(200).json({
+          mess: "Success",
+        });
+      }
+    });
+  } catch (error) {
+    return res.status(400).json({
+      error: "Something went wrong",
+    });
+  }
+};
+
+module.exports.getResultExam = async (req, res, next) => {
+  try {
+    const data = await ResultExam.find({ typeCourse: req.params.id }).limit(10);
+    return res.status(200).json({
+      data: data || [],
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({
+      error: "Something went wrong",
+    });
+  }
+};
+
+module.exports.postMeeting = async (req, res, next) => {
+  try {
+    const res = new Meeting(req.body);
+    res.save((err) => {
+      if (err) {
+        return res.status(400).json({
+          mess: "Error",
+        });
+      } else {
+        return res.status(200).json({
+          mess: "Success",
+        });
+      }
+    });
   } catch (error) {
     return res.status(400).json({
       error: "Something went wrong",

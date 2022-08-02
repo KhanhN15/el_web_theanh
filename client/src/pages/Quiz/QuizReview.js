@@ -8,13 +8,12 @@ import RadioButtonCheckedIcon from "@material-ui/icons/RadioButtonChecked";
 import CloseIcon from "@material-ui/icons/Close";
 import { useHistory } from "react-router-dom";
 
-const QuizPage = () => {
+const QuizReview = () => {
   const [correctAnsw, setCorrectAnsw] = useState([]);
   const [userAnsw, setUserAnsw] = useState([]);
   const [quizzes, SetQuizzes] = useState([]);
   const { courseId } = useParams();
   const { userName } = dataLocalStorage();
-  const [isSubmit, setIsSubmit] = useState(false);
   const [count, setCount] = useState(0);
   const history = useHistory();
 
@@ -37,62 +36,18 @@ const QuizPage = () => {
     fetchQuestion();
   }, []);
 
-  async function quizSubmit(e) {
-    e.preventDefault();
-    if (userAnsw.length < quizzes.length) {
-      alert("Vui long dien het cac cau tra loi");
-      return;
-    }
-    setIsSubmit(true);
-    let marks = 0;
-    for (let i = 0; i < userAnsw.length; i++) {
-      if (userAnsw[i][`item${i}`] === correctAnsw[i]) {
-        marks = marks + 1;
-      }
-    }
-    const result = await axios.post(`/post-leader`, {
-      name: userName,
-      typeCourse: courseId,
-      score: marks,
-      date: Date.now(),
-    });
-
-    history.push(`/quiz/${courseId}/results`);
-  }
-
-  const handleAnswer = (index, e) => {
-    const checkIndex = userAnsw.find((el) =>
-      el.hasOwnProperty([`item${index}`])
-    );
-    if (!checkIndex) {
-      setUserAnsw([
-        ...userAnsw,
-        {
-          [`item${index}`]: e.target.value,
-        },
-      ]);
-    } else {
-      let person = userAnsw.filter(
-        (person) => person[`item${index}`] !== checkIndex[`item${index}`]
+  useEffect(async () => {
+    try {
+      const data = await axios.get(
+        `/get-leader-private/${courseId}/${userName}`
       );
-      setUserAnsw([
-        ...person,
-        {
-          [`item${index}`]: e.target.value,
-        },
-      ]);
+      if (data.data.data[0].score) {
+        setCount(data.data.data[0].score);
+      }
+    } catch (error) {
+      console.log(error);
     }
-  };
-
-  const checkHere = (index, value) => {
-    let check = userAnsw.find((el) => el.hasOwnProperty([`item${index}`]));
-    if (check && check[`item${index}`] === value) {
-      return <RadioButtonCheckedIcon style={{ color: "green" }} />;
-    } else {
-      return "";
-    }
-    return "";
-  };
+  }, []);
 
   const checkSubmit = (value) => {
     let checkCorrectA = correctAnsw.find((el) => el === value);
@@ -111,6 +66,14 @@ const QuizPage = () => {
   return (
     <div className="quiz_view d-flex justify-content-center">
       <div className="quiz-container">
+        <span
+          style={{
+            float: "right",
+            color: "red",
+          }}
+        >
+          Câu đúng : {count}/{quizzes?.length}
+        </span>
         <div>
           <p className="author">Tác giả : {userName} </p>
           <h1>Kì Thi</h1>
@@ -128,20 +91,14 @@ const QuizPage = () => {
                       ""
                     )}
                   </h5>
-                  <div
-                    className="answer_sec"
-                    onChange={(e) => handleAnswer(index, e)}
-                  >
+                  <div className="answer_sec">
                     {row.answers.map((item, s) => {
                       return (
                         <div className="answers" key={s}>
-                          <input type="radio" name="one" value={item} />
                           <span style={{ margin: "0 10px", display: "block" }}>
                             {item}
                           </span>
-                          {isSubmit
-                            ? checkSubmit(item)
-                            : checkHere(index, item)}
+                          {checkSubmit(item)}
                         </div>
                       );
                     })}
@@ -155,20 +112,9 @@ const QuizPage = () => {
             )}
           </div>
         </div>
-        <div className="d-flex justify-content-center align-items-center">
-          {!isSubmit && (
-            <button
-              type="submit"
-              className="quizsubmit"
-              onClick={(e) => quizSubmit(e)}
-            >
-              Submit
-            </button>
-          )}
-        </div>
       </div>
     </div>
   );
 };
 
-export default QuizPage;
+export default QuizReview;

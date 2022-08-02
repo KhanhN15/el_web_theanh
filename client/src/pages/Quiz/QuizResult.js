@@ -30,6 +30,11 @@ const QuizResult = () => {
   const routerChange = () => {
     history.push("/");
   };
+
+  const reviewingExam = () => {
+    history.push(`/quiz/${courseId}/review`);
+  };
+
   return (
     <div className="result">
       <div className="d-flex align-items-center justify-content-center"></div>
@@ -84,12 +89,20 @@ const QuizResult = () => {
               })}
             />
           </div>
-          <button
-            onClick={routerChange}
-            className="res_btns d-flex align-items-center justify-content-center"
-          >
-            Quay Lại
-          </button>
+          <div>
+            <button
+              onClick={reviewingExam}
+              className="res_btns d-flex align-items-center justify-content-center width-200"
+            >
+              Xem lại KQ
+            </button>
+            <button
+              onClick={routerChange}
+              className="res_btns d-flex align-items-center justify-content-center width-200"
+            >
+              Quay Lại
+            </button>
+          </div>
         </div>
       </div>
     </div>

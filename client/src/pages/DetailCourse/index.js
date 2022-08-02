@@ -62,10 +62,10 @@ const DetailCourse = () => {
       if (res.status === 200) {
         setData(res.data.course.student);
       }
-      const ress = await axios.get(`${BASE_URL}/show-all-pdf`);
+      const ress = await axios.get(`${BASE_URL}/show-pdf-file/${id}`);
       if (ress.status === 200) {
         setIsLoadingPdf(true);
-        setListPdf(ress.data.courses);
+        setListPdf(ress.data.course);
       }
     } catch (error) {
       console.log(error);
@@ -247,8 +247,8 @@ const DetailCourse = () => {
                     <CircularProgress className="text-center" />
                   ) : (
                     listPdf.length > 0 &&
-                    listPdf.map((e) => (
-                      <>
+                    listPdf?.map((e, index) => (
+                      <div key={index}>
                         <h3>{e.pdfTopic}</h3>
                         <div className="document">
                           <i
@@ -276,7 +276,7 @@ const DetailCourse = () => {
                             Delete
                           </Button>
                         </div>
-                      </>
+                      </div>
                     ))
                   )}
                 </Paper>

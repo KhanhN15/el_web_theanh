@@ -28,6 +28,9 @@ const {
   findQuizById,
   updateQuiz,
   getLeaderPrivate,
+  showPdfWithId,
+  getResultExam,
+  postDetailExam,
 } = require("../controllers/courseController");
 const { adminAuthentication } = require("../middlewares/authentication");
 const { requireLogin } = require("../middlewares/requireLogin");
@@ -55,6 +58,7 @@ router.post("/add-pdf", addPdf);
 router.get("/show-all-pdf", showAllPdf);
 router.get("/show-all-pdf/:id", showAllPdfById);
 router.get("/show-all-pdf-course/:id", showAllPdfByIdCourse);
+router.get("/show-pdf-file/:id", showPdfWithId);
 router.delete("/delete/:id", deletePdfById);
 router.put("/edit", putPdfById);
 
@@ -79,5 +83,8 @@ router.get("/get-leader-private/:id/:name", getLeaderPrivate);
 router.post("/post-leader", postLeader);
 router.delete("/delete-quiz/:id", deleteQuiz);
 router.get("/find-by-id-quiz/:id", findQuizById);
+
+router.get("/show-result-exam/:id", getResultExam);
+router.post("/post-result-exam", postDetailExam);
 
 module.exports = router;
