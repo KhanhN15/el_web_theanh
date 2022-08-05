@@ -39,6 +39,7 @@ const QuizPage = () => {
 
   async function quizSubmit(e) {
     e.preventDefault();
+    let arrAnswerWrong = [];
     if (userAnsw.length < quizzes.length) {
       alert("Vui long dien het cac cau tra loi");
       return;
@@ -46,6 +47,7 @@ const QuizPage = () => {
     setIsSubmit(true);
     let marks = 0;
     for (let i = 0; i < userAnsw.length; i++) {
+      arrAnswerWrong.push(userAnsw[i][`item${i}`]);
       if (userAnsw[i][`item${i}`] === correctAnsw[i]) {
         marks = marks + 1;
       }
@@ -54,6 +56,7 @@ const QuizPage = () => {
       name: userName,
       typeCourse: courseId,
       score: marks,
+      wrongAnswer: arrAnswerWrong,
       date: Date.now(),
     });
 

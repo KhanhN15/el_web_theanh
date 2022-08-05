@@ -14,6 +14,10 @@ const courseSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    wrongAnswer: {
+      type: Array,
+      required: true,
+    },
     date: {
       type: Date,
       required: true,

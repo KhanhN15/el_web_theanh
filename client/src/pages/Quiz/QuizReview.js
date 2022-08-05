@@ -15,6 +15,7 @@ const QuizReview = () => {
   const { courseId } = useParams();
   const { userName } = dataLocalStorage();
   const [count, setCount] = useState(0);
+  const [wrongAnswer, setWrongAnswer] = useState([]);
   const history = useHistory();
 
   async function fetchQuestion() {
@@ -43,6 +44,7 @@ const QuizReview = () => {
       );
       if (data.data.data[0].score) {
         setCount(data.data.data[0].score);
+        setWrongAnswer(data.data.data[0].wrongAnswer);
       }
     } catch (error) {
       console.log(error);
@@ -55,6 +57,14 @@ const QuizReview = () => {
       return <DoneIcon style={{ color: "green" }} />;
     } else {
       return <CloseIcon style={{ color: "red" }} />;
+    }
+    return "";
+  };
+
+  const checkWrongAnswer = (item) => {
+    let check = wrongAnswer.find((i) => i === item);
+    if (check) {
+      return "ans";
     }
     return "";
   };
@@ -94,7 +104,10 @@ const QuizReview = () => {
                   <div className="answer_sec">
                     {row.answers.map((item, s) => {
                       return (
-                        <div className="answers" key={s}>
+                        <div
+                          className={`${checkWrongAnswer(item)} answers`}
+                          key={s}
+                        >
                           <span style={{ margin: "0 10px", display: "block" }}>
                             {item}
                           </span>

@@ -13,6 +13,7 @@ const QuizResult = () => {
   const history = useHistory();
   const { courseId } = useParams();
   const [count, setCount] = useState(0);
+  const [countWrongAnswer, setCountWrongAnswer] = useState([]);
 
   useEffect(async () => {
     try {
@@ -21,6 +22,7 @@ const QuizResult = () => {
       );
       if (data.status === 200) {
         setCount(data.data.data[0].score);
+        setCountWrongAnswer(data.data.data[0].wrongAnswer);
       }
     } catch (error) {
       console.log(error);
@@ -64,7 +66,7 @@ const QuizResult = () => {
               className="bar_prog"
               value={count}
               maxValue={5}
-              text={`${count}/5`}
+              text={`${count}/${countWrongAnswer.length}`}
               styles={buildStyles({
                 // Rotation of path and trail, in number of turns (0-1)
                 rotation: 0.25,
